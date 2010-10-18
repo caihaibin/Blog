@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+{% block header %}
+<a  class="a-img" href="/"><img src="/static/img/header_logo.gif"/></a>
+   
+{% endblock %}
+
+{% block content_header %}
+    {% if page_description %}
+        <h2 class="page-description">{{ page_description }}</h2>
+    {% endif %}
+    
+{% endblock %}
+

@@ -1,0 +1,130 @@
+
+<h2>{{player.email}}</h2>
+
+<form method="get">
+{{form}}
+
+<input type="submit" value="Fetch" />
+</form>
+
+<div id="graph"></div>
+
+<h4>Solves</h4>
+<table border="1">
+    <tr>
+        <th>Puzzle</th>
+        <th>Mode</th>
+        <th>Session</th>
+        <th>Best Time</th>
+        <th>Worst Time</th>
+        <th>Avg5</th>
+        <th>Avg5 SD</th>
+        <th>Avg12</th>
+        <th>Avg12 SD</th>
+        <th>Action</th>
+    </tr>
+    {% for stat in stats %}
+    <tr>
+        <td>{{stat.puzzle}}</td>
+        <td>{{stat.mode}}</td>
+        <td><a href="/qqtimer/stat/{{stat.key}}">{{stat.start}}</a></td>
+        <td>{{stat.best_time}}</td>
+        <td>{{stat.worst_time}}</td>
+        <td>{{stat.avg5}}</td>        
+        <td>{{stat.avg5_sd|floatformat:2}}</td>
+        <td>{{stat.avg12}}</td>
+        <td>{{stat.avg12_sd|floatformat:2}}</td>
+        <td><a href="/qqtimer/stat/{{stat.key}}/delete">Delete</a></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="10">No session yet.</td>
+    </tr>
+    
+    {% endfor %}
+</table>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<!--[if IE]><script language="javascript" type="text/javascript" src="/static/js/highchart/excanvas.compiled.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="/static/js/highchart/highcharts.js"></script>
+<script type="text/javascript">
+
+//var start = new Date({{stat.start.year, stat.start.month, stat.);
+$(document).ready(function(){
+    
+    {% for scramble in stat.scrambles %}
+        $('#scramble{{forloop.counter0}}').text("{{scramble|safe}}");
+    {% endfor %}
+    
+    {% for comment in stat.comments %}
+        $('#comment{{forloop.counter0}}').text("{{comment|safe}}");
+    {% endfor %}
+    
+    //best = [{% for data in graph_data %}[new Date("{{data.3|date:"F j, Y H:i:s"}}"), {% ifnotequal data.0 0 %}{{data.0}}{% else %}null{% endifnotequal %}]{% if not forloop.last %}, {% endif %}{% endfor %}];
+    //avg5 = [{% for data in graph_data %}[new Date("{{data.3|date:"F j, Y H:i:s"}}"), {% ifnotequal data.1 0 %}{{data.1}}{% else %}null{% endifnotequal %}]{% if not forloop.last %}, {% endif %}{% endfor %}];
+    //avg12 = [{% for data in graph_data %}[new Date("{{data.3|date:"F j Y H:i:s"}}"), {% ifnotequal data.2 0 %}{{data.2}}{% else %}null{% endifnotequal %}]{% if not forloop.last %}, {% endif %}{% endfor %}];
+    dates = [{% for data in graph_data %}"{{data.3|date:"n/j G:i"}}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    best2 = [{% for data in graph_data %}{% ifnotequal data.0 0 %}{{data.0}}{% else %}null{% endifnotequal %}{% if not forloop.last %}, {% endif %}{% endfor %}];
+    avg52 = [{% for data in graph_data %}{% ifnotequal data.1 0 %}{{data.1}}{% else %}null{% endifnotequal %}{% if not forloop.last %}, {% endif %}{% endfor %}];
+    avg122 = [{% for data in graph_data %}{% ifnotequal data.2 0 %}{{data.2}}{% else %}null{% endifnotequal %}{% if not forloop.last %}, {% endif %}{% endfor %}];
+    
+    
+    var chart = new Highcharts.Chart({
+   chart: {
+      renderTo: 'graph',
+      defaultSeriesType: 'line',
+      margin: [80, 140, 50, 100]
+   },
+   title: {   
+      text: 'LLast 10 {{puzzle}}: {{mode}} Mode Sessions Performances',      
+      style: {textAlign: 'left', color: '#343456', position: 'absolute'
+         
+      }
+   },   
+   xAxis: {
+      categories: dates,
+      title: {
+         text: 'Period'
+      }
+   },
+   yAxis: {
+      title: {
+         text: 'Time'
+      },
+      plotLines: [{
+         value: 0,
+         width: 1,
+         color: '#808080'
+      }]
+   },
+   tooltip: {
+      formatter: function() {
+                return '<b>'+ this.series.name +'</b><br/>'+
+            this.x +': '+ this.y+'secs';
+      }
+   },
+   legend: {
+      layout: 'vertical',
+      style: {
+         left: 'auto',
+         bottom: 'auto',
+         right: '10px',
+         top: '100px'
+      }
+   },
+   series: [{
+      name: 'Best Time',
+      data: best2
+   }, {
+      name: 'Avg 5',
+      data: avg52
+   }, {
+      name: 'Avg 12',
+      data: avg122
+   }],
+   credits: {enabled: false}
+});
+
+});
+    
+</script>

@@ -1,0 +1,47 @@
+.addthis_toolbox .vertical
+{
+    width: 100px;
+    padding: 0;
+}
+
+.addthis_toolbox .vertical a
+{
+    width: 102px;
+    padding: 4px 0 4px 24px;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: blue;
+}
+
+.addthis_toolbox .vertical a:hover
+{
+    
+    text-decoration: none;
+}
+
+.addthis_toolbox .vertical span
+{
+    position: absolute;
+    left: 0px;
+    top: 4px;
+}
+
+.addthis_toolbox .vertical .more
+{
+    border-top: solid 1px #eee;
+    padding: 10px 0 0 0;
+    margin: 0;
+    text-align: center;
+}
+
+.addthis_toolbox .vertical .more a
+{
+    padding: 4px 0;
+    margin: 0;
+}
+
+.addthis_toolbox .vertical .more span
+{
+    display: none;
+}

@@ -1,0 +1,22 @@
+<script  type="text/javascript" src="/static/js/findreplace.js"></script>
+
+
+<body>
+<form method="post">
+    {{form}}
+    <input type="submit" value="Replace"/>
+</form>
+
+<form id="demo"><input id="sText" /><button>Go!</button></form>
+</body>
+<script type="text/javascript">
+    
+    document.getElementById('demo').onsubmit = function() {
+        findAndReplace(document.getElementById('sText').value, function(text){
+            return '<span class="highlight">' + text + '</span>';
+        });
+        alert('howdy');
+        return false;
+    };
+    
+</script>

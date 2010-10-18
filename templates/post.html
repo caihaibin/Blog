@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/css/addthis.css" type="text/css" media="screen, projection">
+{% endblock css %}
+    
+{% block header %}
+<a  class="a-img" href="/"><img src="/static/img/header_logo.gif"/></a>
+   
+{% endblock %}
+
+{% block content %}
+	<br/>
+    <div class="post">
+		<div class="post-info">
+			
+			<div class="date">{{ post.pub_date|date:"b j" }}</div>
+			<div class="year">{{ post.pub_date|date:"Y" }}</div>
+			<div class="comments"><a href="{{ post.get_absolute_url }}#disqus_thread">Comments</a></div>
+			
+			<div class="tags">
+					<ul>
+					{% for tag in post.tags %}
+						<li><a href="/blog/tag/{{ tag }}">{{ tag }}</a></li>
+					{% endfor %}
+					</ul>
+			</div>
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox">
+                <div class="vertical">
+<a class="addthis_button_email">Email</a>
+        <a class="addthis_button_delicious">Delicious</a>
+        <a class="addthis_button_digg">Digg</a>
+        <a class="addthis_button_dzone">Dzone</a>
+        <a class="addthis_button_facebook">Facebook</a>
+        <a class="addthis_button_reddit">Reddit</a>
+        <a class="addthis_button_stumbleupon">Stumble</a>
+        <a class="addthis_button_twitter">Twitter</a>
+        
+        <div class="more">
+            <a class="addthis_button_expanded">More Destinations</a>
+        </div>
+
+                </div>
+            </div>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=james_027"></script>
+            <!-- AddThis Button END -->
+
+		</div>
+			<div class="post-main">			
+				<div class="title">{{ post.title }}</div>
+				{% if user_is_admin %}
+				<div class="admin">
+					<a href="{{ post.get_edit_url }}">edit post</a>
+				</div>
+				{% endif %}
+				<div class="body">{{ post.body_html|safe }}</div>
+			</div>
+        
+        
+        
+    </div>
+	<div class="post">
+    {% if settings.disqus %}
+        <div id="disqus_thread"></div>
+		<script type="text/javascript">
+
+			var disqus_developer = 0; 
+
+		</script> 
+        <script type="text/javascript" src="http://disqus.com/forums/{{ settings.disqus }}/embed.js"></script>
+        <noscript><a href="http://{{ settings.disqus }}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		
+		
+    {% endif %}
+	</div>
+{% endblock %}
+
+{% block before_body_end %}
+
+{% if settings.disqus %}
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/jamescaihaibin/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+
+
+{% endif %}
+{% endblock %}
+
+{% block sidebar2 %}
+<script type="text/javascript"><!--
+google_ad_client = "pub-2628893462887853";
+/* 200x200, created 11/29/09 */
+google_ad_slot = "6190516861";
+google_ad_width = 200;
+google_ad_height = 200;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+{% endblock sidebar2 %}

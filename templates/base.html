@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}{% endblock %} | {{ settings.title }}</title>
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">    
+    <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen, projection">
+    <link href="/blog/rss2" type="application/rss+xml" rel="alternate" title="{{ settings.title }} RSS Feed" />
+    {% block css %}
+    {% endblock css %}
+</head>
+<body>
+    <div class="container">
+        <div id="header" class="span-24 last">
+            {% block header %}
+            {% endblock %}
+            <h2>my home is not of this world...</h2>
+        </div>
+        <div id="content" class="span-18">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div id="sidebar" class="span-6 last">            
+            <br/>
+            {% block sidebar %}
+            <img src="/static/img/pages.gif"/>
+            <ul>
+                <li><a href="/blog/2009/11/26/what-i-want-you-to-know-about-me">about me</a></li>
+                <li><a href="/blog/2009/11/26/addicted-to">addicted to</a></li>
+            </ul>
+            {% if tag_list %}
+            <div id="tag-list">
+                <img src="/static/img/tags.gif"/>
+                <ul>
+                    {% for tag in tag_list %}
+                    <li><a href="{{ tag.url }}">{{ tag.tag }}</a> ({{ tag.count }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if archive_list %}
+            <div id="archive-list">
+                <img src="/static/img/archives.gif"/>
+                <ul>
+                    {% for month in archive_list reversed %}
+                    <li><a href="{{ month.url }}">{{ month.date|date:"F Y" }}</a> ({{ month.count }})</li>
+                    {% endfor %}
+                </ul>
+            </div>			
+            {% endif %}
+            
+			{% endblock sidebar %}
+			
+			
+			
+			{% block sidebar2 %}
+            {% endblock sidebar2 %}
+            
+            
+            <a href="/blog/rss2">
+                <img id="feedme" src="/static/img/panda.png"/>
+            </a>
+            
+        </div>
+        <div id="footer" class="span-24 last">
+			<div class="footer-content">
+            &copy; <a href="/" title="Home">{{ settings.author }}</a> 2009 |
+			Hosted by <a href="http://code.google.com/appengine">Google App Engine</a> |
+			Develop base on <a href="http://joeyb.org">JoeyB.org</a>
+			</div>
+        </div>
+    </div>
+	{% block before_body_end %}
+	
+	{% endblock %}
+    
+    {% if settings.google_analytics %}
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try{
+                var pageTracker = _gat._getTracker("{{ settings.google_analytics }}");
+                pageTracker._trackPageview();
+            } catch(err) {}
+        </script>
+    {% endif %}	
+    
+</body>
+</html>

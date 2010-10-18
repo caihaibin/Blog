@@ -1,0 +1,22 @@
+{{site.content|safe}}
+<style type="text/css">
+        
+        span.highlight {
+            background: red;
+            color: white;
+        }
+    </style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>    
+<script  type="text/javascript" src="/static/js/findreplace.js"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+	{% for word in found %}
+    findAndReplace(/\b{{word.0}}\b/gi, '{{word.1}}');
+	{% endfor %}
+    
+    });
+    
+
+    
+</script>

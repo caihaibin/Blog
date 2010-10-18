@@ -1,0 +1,44 @@
+
+<h4><a href="/qqtimer/player/{{player.key}}">{{player.email}}</a></h4>
+<h4>{{stat.puzzle}}:{{stat.mode}} session @ {{stat.start}}</h4>
+<p>best time: {{stat.best_time}}</p>
+<p>worst time: {{stat.worst_time}}</p>
+<p>avg5 time: {{stat.avg5}} SD: {{stat.avg5_sd}}</p>
+<p>avg12 time: {{stat.avg12}} SD: {{stat.avg12_sd}}</p>
+
+<table>
+<tr>
+    <th>#</th>
+    <th>Time</th>
+    <th>Scramble</th>
+    <th>Comment</th>
+</tr>
+{% for time in stat.times %}
+<tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{time}}</td>
+    <td id="scramble{{forloop.counter0}}"></td>
+    <td id="comment{{forloop.counter0}}"></td>
+</tr>
+{% endfor %}
+</table>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+//var start = new Date({{stat.start.year, stat.start.month, stat.);
+$(document).ready(function(){
+    
+    {% for scramble in stat.scrambles %}
+        $('#scramble{{forloop.counter0}}').text("{{scramble|safe}}");
+    {% endfor %}
+    
+    {% for comment in stat.comments %}
+        $('#comment{{forloop.counter0}}').text("{{comment|safe}}");
+    {% endfor %}
+    
+    });
+    
+</script>
